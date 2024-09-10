@@ -6,19 +6,29 @@ const router = express.Router();
 // Route for Save a new Book
 router.post('/', async (request, response) => {
   try {
+    const { title, author, publishYear } = request.body;
+    // if (
+    //   !request.body.title ||
+    //   !request.body.author ||
+    //   !request.body.publishYear
+    // ) {
+    //   return response.status(400).send({
+    //     message: 'Send all required fields: title, author, publishYear',
+    //   });
+    // }
     if (
-      !request.body.title ||
-      !request.body.author ||
-      !request.body.publishYear
+      !title ||
+      !author ||
+      !publishYear
     ) {
       return response.status(400).send({
         message: 'Send all required fields: title, author, publishYear',
       });
     }
     const newBook = {
-      title: request.body.title,
-      author: request.body.author,
-      publishYear: request.body.publishYear,
+      title: title,
+      author: author,
+      publishYear: publishYear,
     };
 
     const book = await Book.create(newBook);
