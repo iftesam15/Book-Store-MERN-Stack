@@ -7,15 +7,7 @@ const router = express.Router();
 router.post('/', async (request, response) => {
   try {
     const { title, author, publishYear } = request.body;
-    // if (
-    //   !request.body.title ||
-    //   !request.body.author ||
-    //   !request.body.publishYear
-    // ) {
-    //   return response.status(400).send({
-    //     message: 'Send all required fields: title, author, publishYear',
-    //   });
-    // }
+
     if (
       !title ||
       !author ||
