@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
 import BooksTable from "../components/home/BooksTable";
 import BooksCard from "../components/home/BooksCard";
-
+import Demo from "./demo";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,6 +55,7 @@ const Home = () => {
       ) : (
         <BooksCard books={books} />
       )}
+      <Demo></Demo>
     </div>
   );
 };
