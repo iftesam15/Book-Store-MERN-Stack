@@ -15,12 +15,17 @@ const allUsers = [
 export default function Demo() {
   const [users, setUsers] = useState(allUsers); // Initially set to show all users
 
-  const handleSearch = useCallback((text) => {
-    const filteredUsers = allUsers.filter(
-      (user) => user.toLowerCase().includes(text.toLowerCase()) // case-insensitive search
-    );
-    setUsers(filteredUsers);
-  }, []);
+  const handleSearch = useCallback(
+    (text) => {
+      console.log(users[0]);
+
+      const filteredUsers = allUsers.filter(
+        (user) => user.toLowerCase().includes(text.toLowerCase()) // case-insensitive search
+      );
+      setUsers(filteredUsers);
+    },
+    [users]
+  );
 
   const shuffle = (array) => {
     // Fisher-Yates shuffle algorithm

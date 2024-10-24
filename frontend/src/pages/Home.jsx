@@ -7,6 +7,9 @@ import { MdOutlineAddBox } from "react-icons/md";
 import BooksTable from "../components/home/BooksTable";
 import BooksCard from "../components/home/BooksCard";
 import Demo from "./demo";
+import UseContext from "../components/useContext/UseContext";
+import UseRef from "../components/useRef/UseRef";
+import UseReducer from "../components/useReducer/UseReducer";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -56,6 +59,9 @@ const Home = () => {
         <BooksCard books={books} />
       )}
       <Demo></Demo>
+      <UseContext></UseContext>
+      <UseRef></UseRef>
+      <UseReducer></UseReducer>
     </div>
   );
 };
