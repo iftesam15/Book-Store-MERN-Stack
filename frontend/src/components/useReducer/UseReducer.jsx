@@ -1,54 +1,34 @@
-import React from "react";
-import { useReducer } from "react";
+import React, { useReducer, useState } from "react";
+import { INITIAL_STATE, postReducer } from "./postReducer";
 
-function reducer(state, action) {
-  const { type } = action;
-  switch (type) {
-    case "increment": {
-      const newCount = state.count + 1;
-      const hasError = newCount > 5;
-      return {
-        ...state,
-        count: hasError ? state.count : state.count + 1,
-        error: hasError ? "Count cannot exceed 5" : null,
-      };
-    }
-    case "decrement": {
-      const newCount = state.count - 1;
-      const hasError = newCount < 0;
-      return {
-        ...state,
-        count: hasError ? state.count : state.count - 1,
-        error: hasError ? "Count must be greater than zero" : null,
-      };
-    }
-    case "reset": {
-      return { count: 0, error: null };
-    }
-    default:
-      return state;
-  }
-}
-export default function UseReducer() {
-  const [state, dispatch] = useReducer(reducer, {
-    count: 0,
-    error: "Hello world",
-  });
+const Post = () => {
+  const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
+
+  const handleFetch = () => {
+    dispatch({ type: "FETCH_START" });
+
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({ type: "FETCH_SUCCESS", payload: data });
+      })
+      .catch((err) => {
+        dispatch({ type: "FETCH_ERROR" });
+      });
+  };
+
   return (
     <div>
-      <div>Count {state.count}</div>
-      {state.error && <div className=" text-red-600 ">{state.error}</div>}
-      <button className="mb-2" onClick={() => dispatch({ type: "increment" })}>
-        Increment
+      <button
+        className="bg-red-400 p-2 font-semibold  rounded-sm  hover:bg-red-500 "
+        onClick={handleFetch}
+      >
+        {state.loading ? "wait..." : "Fetch the post"}
       </button>
-      <button className="mb-2" onClick={() => dispatch({ type: "decrement" })}>
-        Decrement
-      </button>
-      <button className="mb-2" onClick={() => dispatch({ type: "reset" })}>
-        Reset
-      </button>
+      <p>{!state.error && state.post?.title}</p>
+      <span>{!state.loading && state.error && "something went wrong"}</span>
     </div>
   );
-}
-// Similar to use State
-// use reducer follows the redux pattern
+};
+
+export default Post;

@@ -10,6 +10,8 @@ import Demo from "./demo";
 import UseContext from "../components/useContext/UseContext";
 import UseRef from "../components/useRef/UseRef";
 import UseReducer from "../components/useReducer/UseReducer";
+import Post from "../components/useReducer/UseReducer";
+import TagManager from "../components/useReducer/TagManager";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -62,7 +64,9 @@ const Home = () => {
       <UseContext></UseContext>
       <UseMyContext></UseMyContext>
       <UseRef></UseRef>
-      <UseReducer></UseReducer>
+
+      <Post></Post>
+      <TagManager></TagManager>
     </div>
   );
 };
