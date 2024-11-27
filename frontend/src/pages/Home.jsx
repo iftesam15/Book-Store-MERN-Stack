@@ -12,6 +12,8 @@ import UseRef from "../components/useRef/UseRef";
 import UseReducer from "../components/useReducer/UseReducer";
 import Post from "../components/useReducer/UseReducer";
 import TagManager from "../components/useReducer/TagManager";
+import UseCountContext from "../components/useContext2/useCountContext";
+import { CounterProvider } from "../components/useContext2/Counter";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +35,7 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      <div className="flex justify-center items-center gap-x-4">
+      {/* <div className="flex justify-center items-center gap-x-4">
         <button
           className="bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg"
           onClick={() => setShowType("table")}
@@ -66,7 +68,10 @@ const Home = () => {
       <UseRef></UseRef>
 
       <Post></Post>
-      <TagManager></TagManager>
+      <TagManager></TagManager> */}
+      <CounterProvider>
+        <UseCountContext></UseCountContext>
+      </CounterProvider>
     </div>
   );
 };
