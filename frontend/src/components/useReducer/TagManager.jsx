@@ -29,7 +29,7 @@ const TagManager = () => {
       <h1>Tag Manager</h1>
 
       <textarea
-        className=" outline "
+        className="w-full p-3 border-2 border-dashed border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder-gray-500 text-gray-800  "
         value={input}
         onChange={(e) => clearError(e.target.value)}
         placeholder="Enter tags separated by commas or spaces"
