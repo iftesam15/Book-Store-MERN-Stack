@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react";
-import { INTIAL_TAG_STATE, tagReucer } from "./TagReducer";
+import { INTIAL_TAG_STATE, tagReucer } from "./tagReducer";
 
 const TagManager = () => {
   const [state, dispatch] = useReducer(tagReucer, INTIAL_TAG_STATE);

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useReducer, useState } from "react";
 import { INITIAL_STATE, postReducer } from "./postReducer";
 

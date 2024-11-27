@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { DashboardContext } from "./Context";
 import Dashboard from "./Dashboard";

@@ -14,6 +14,7 @@ import Post from "../components/useReducer/UseReducer";
 import TagManager from "../components/useReducer/TagManager";
 import UseCountContext from "../components/useContext2/useCountContext";
 import { CounterProvider } from "../components/useContext2/Counter";
+import DropdownWithCities from "./DropDownWithCities";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -72,6 +73,7 @@ const Home = () => {
       <CounterProvider>
         <UseCountContext></UseCountContext>
       </CounterProvider>
+      <DropdownWithCities></DropdownWithCities>
     </div>
   );
 };
