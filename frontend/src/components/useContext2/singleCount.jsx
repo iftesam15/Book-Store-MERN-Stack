@@ -10,9 +10,18 @@ const SingleCount = () => {
     setCount(count - 1);
   };
   return (
-    <div>
-      <button onClick={handleIncreament}> Increament</button>
-      <button onClick={handleDecreament}> Decreament</button>
+    <div className="flex gap-2">
+      <button
+        className="bg-green-400 p-2 rounded-md"
+        onClick={handleIncreament}
+      >
+        {" "}
+        Increament
+      </button>
+      <button className="bg-red-400 p-2 rounded-md" onClick={handleDecreament}>
+        {" "}
+        Decreament
+      </button>
     </div>
   );
 };

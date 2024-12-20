@@ -15,6 +15,8 @@ import TagManager from "../components/useReducer/TagManager";
 import UseCountContext from "../components/useContext2/useCountContext";
 import { CounterProvider } from "../components/useContext2/Counter";
 import DropdownWithCities from "./DropDownWithCities";
+import Item from "../components/item";
+import Cart from "../components/Cart";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -68,12 +70,19 @@ const Home = () => {
       <UseMyContext></UseMyContext>
       <UseRef></UseRef>
 
-      <Post></Post>
+     
       <TagManager></TagManager> */}
       <CounterProvider>
         <UseCountContext></UseCountContext>
       </CounterProvider>
       <DropdownWithCities></DropdownWithCities>
+      <div className="flex flex-col  items-center ">
+        <Item name="Macbook" price="100000" />
+        <Item name="Iphone" price="150000" />{" "}
+        <Item name="Microsoft surface" price="90000" />{" "}
+        <Item name="Macbook pro" price="200000" />
+      </div>
+      <Cart />
     </div>
   );
 };
