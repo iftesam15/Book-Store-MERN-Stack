@@ -17,11 +17,14 @@ import { CounterProvider } from "../components/useContext2/Counter";
 import DropdownWithCities from "./DropDownWithCities";
 import Item from "../components/item";
 import Cart from "../components/Cart";
+import i18n from "../i18n";
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showType, setShowType] = useState("table");
-
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   useEffect(() => {
     setLoading(true);
     axios
@@ -50,6 +53,18 @@ const Home = () => {
           onClick={() => setShowType("card")}
         >
           Card
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          onClick={() => changeLanguage("en")}
+        >
+          English
+        </button>
+        <button
+          className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 ml-2 rounded"
+          onClick={() => changeLanguage("pt")}
+        >
+          Portuguese
         </button>
       </div>
       <div className="flex justify-between items-center">
