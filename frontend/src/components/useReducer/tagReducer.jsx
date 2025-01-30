@@ -5,10 +5,9 @@ export const INTIAL_TAG_STATE = {
 export const tagReucer = (state, action) => {
   switch (action.type) {
     case "ADD_TAGS":
-
       const newTags = action.payload
         .split(/[, ]+/)
-        .filter((tag) => tag.trim() !== "");
+        .filter((tags) => tags.trim() !== "");
 
       return {
         ...state,
