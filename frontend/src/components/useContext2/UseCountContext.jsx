@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { CounterContext, useCounterProvider } from "./Counter";
 import SingleCount from "./singleCount";
 const UseCountContext = () => {

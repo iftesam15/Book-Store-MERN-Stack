@@ -6,18 +6,15 @@ import UseMyContext from "../components/ChainPropsContext/UseChainContext";
 import { MdOutlineAddBox } from "react-icons/md";
 import BooksTable from "../components/home/BooksTable";
 import BooksCard from "../components/home/BooksCard";
-import Demo from "./demo";
+import Demo from "./Demo";
 import UseContext from "../components/useContext/UseContext";
-import UseRef from "../components/useRef/UseRef";
 import TagManager from "../components/useReducer/TagManager";
-import UseCountContext from "../components/useContext2/useCountContext";
-import { CounterProvider } from "../components/useContext2/Counter";
 import DropdownWithCities from "./DropDownWithCities";
-import Item from "../components/item";
+import Item from "../components/Item";
 import Cart from "../components/Cart";
 import i18n from "../i18n";
 import UserContextProvider from "../components/context/UserContextProvider";
-import Login from "../components/login";
+import Login from "../components/Login"
 import Profile from "../components/Profile";
 
 const Home = () => {
@@ -99,9 +96,9 @@ const Home = () => {
       {/* <UseRef></UseRef> */}
 
       <TagManager></TagManager>
-      <CounterProvider>
+      {/* <CounterProvider>
         <UseCountContext></UseCountContext>
-      </CounterProvider>
+      </CounterProvider> */}
       <DropdownWithCities></DropdownWithCities>
       <div className="flex flex-col  items-center ">
         <Item name="Macbook" price="100000" />
