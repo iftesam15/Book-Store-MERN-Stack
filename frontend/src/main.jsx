@@ -8,9 +8,11 @@ import { CartProvider } from "./components/CartContext/CartContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <CartProvider>
-      <App />
-    </CartProvider>
+    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+      <CartProvider>
+        <App />
+      </CartProvider>
+    </SnackbarProvider>
   </BrowserRouter>
 );
 
