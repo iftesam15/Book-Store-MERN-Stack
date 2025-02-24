@@ -16,7 +16,7 @@ import i18n from "../i18n";
 import UserContextProvider from "../components/context/UserContextProvider";
 import Login from "../components/Login"
 import Profile from "../components/Profile";
-
+import Parent from "../components/Parent-child/parent";
 const Home = () => {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
@@ -112,6 +112,9 @@ const Home = () => {
           <Login></Login>
           <Profile></Profile>
         </UserContextProvider>
+      </div>
+      <div>
+        <Parent></Parent>
       </div>
     </div>
   );
