@@ -1,8 +1,8 @@
 import { useReducer, useState } from "react";
-import { INTIAL_TAG_STATE, tagReucer } from "./tagReducer";
+import { INITIAL_TAG_STATE, tagReucer } from "./tagReducer";
 
 const TagManager = () => {
-  const [state, dispatch] = useReducer(tagReucer, INTIAL_TAG_STATE);
+  const [state, dispatch] = useReducer(tagReucer, INITIAL_TAG_STATE);
   const [input, setInput] = useState("");
   const handleAddTags = () => {
     if (!input.trim()) {

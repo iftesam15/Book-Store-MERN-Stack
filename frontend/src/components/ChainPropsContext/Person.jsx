@@ -1,7 +1,7 @@
 import React from "react";
-import chainContext from "./ChainContext";
+import ChainContext from "./ChainContext";
 const Person = () => {
-  const user = chainContext();
+  const user = ChainContext();
   return (
     <div>
       <h1>Welcome to person , {user.name}</h1>

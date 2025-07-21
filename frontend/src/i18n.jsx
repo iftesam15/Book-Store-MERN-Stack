@@ -19,6 +19,7 @@ i18n.use(initReactI18next).init({
         home: "Início",
         about: "Sobre",
         contact: "Contato",
+        Welcome: "Bem-vindo",
       },
     },
   },

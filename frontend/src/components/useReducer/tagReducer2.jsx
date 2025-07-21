@@ -4,7 +4,7 @@ export const INITIAL_TAG_STATE = {
 };
 export const tagReducer = (state, action) => {
   switch (action.type) {
-    case "ADD_TAGS":
+    case "ADD_TAGS": {
       const newTags = action.payload
         .split(/[, ]+/)
         .filter((tag) => tag.trim() !== "");
@@ -13,6 +13,7 @@ export const tagReducer = (state, action) => {
         tage: [...state.tags, ...newTags],
         error: null,
       };
+    }
     case "REMOVE_TAGS":
       return {
         ...state,

@@ -12,7 +12,7 @@ const App = () => {
   const { t, i18n } = useTranslation();
   useEffect(() => {
     i18n.changeLanguage(navigator.language);
-  }, []);
+  }, [i18n]);
   return (
     <Routes>
       {/* Use Layout as the wrapper for all pages */}
