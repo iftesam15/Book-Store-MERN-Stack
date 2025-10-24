@@ -14,9 +14,10 @@ import Item from "../components/Item";
 import Cart from "../components/Cart";
 import i18n from "../i18n";
 import UserContextProvider from "../components/context/UserContextProvider";
-import Login from "../components/Login"
+import Login from "../components/Login";
 import Profile from "../components/Profile";
 import Parent from "../components/Parent-child/parent";
+import { Boss } from "../components/Callbackdemo";
 const Home = () => {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
@@ -107,7 +108,7 @@ const Home = () => {
         <Item name="Macbook pro" price="200000" />
       </div>
       <Cart />
-      <div>
+      {/* <div>
         <UserContextProvider>
           <Login></Login>
           <Profile></Profile>
@@ -115,7 +116,8 @@ const Home = () => {
       </div>
       <div>
         <Parent></Parent>
-      </div>
+      </div> */}
+      <Boss></Boss>
     </div>
   );
 };
