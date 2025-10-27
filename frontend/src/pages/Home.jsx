@@ -18,6 +18,7 @@ import Login from "../components/Login";
 import Profile from "../components/Profile";
 import Parent from "../components/Parent-child/parent";
 import { Boss } from "../components/Callbackdemo";
+import CommentList from "../components/Comments";
 const Home = () => {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
@@ -91,23 +92,23 @@ const Home = () => {
       ) : (
         <BooksCard books={books} />
       )}
-      <Demo></Demo>
+      {/* <Demo></Demo>
       <UseContext></UseContext>
-      <UseMyContext></UseMyContext>
+      <UseMyContext></UseMyContext> */}
       {/* <UseRef></UseRef> */}
 
       <TagManager></TagManager>
       {/* <CounterProvider>
         <UseCountContext></UseCountContext>
       </CounterProvider> */}
-      <DropdownWithCities></DropdownWithCities>
+      {/* <DropdownWithCities></DropdownWithCities>
       <div className="flex flex-col  items-center ">
         <Item name="Macbook" price="100000" />
         <Item name="Iphone" price="150000" />{" "}
         <Item name="Microsoft surface" price="90000" />{" "}
         <Item name="Macbook pro" price="200000" />
-      </div>
-      <Cart />
+      </div> */}
+      {/* <Cart /> */}
       {/* <div>
         <UserContextProvider>
           <Login></Login>
@@ -117,7 +118,9 @@ const Home = () => {
       <div>
         <Parent></Parent>
       </div> */}
-      <Boss></Boss>
+      {/* <Boss></Boss> */}
+
+      <CommentList />
     </div>
   );
 };
