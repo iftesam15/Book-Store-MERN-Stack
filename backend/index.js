@@ -6,6 +6,8 @@ import ebooksRoute from "./routes/ebooksRoute.js";
 import audioBooksRoute from "./routes/audioBooksRoute.js";
 import cors from "cors";
 
+import "./schedulers/schedular1.js";
+
 const app = express();
 
 // Middleware for parsing request body
