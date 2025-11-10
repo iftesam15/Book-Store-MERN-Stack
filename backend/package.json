@@ -12,8 +12,11 @@
   "author": "MamadTaheri68",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.1",
     "mongoose": "^7.8.1",
     "node-cron": "^4.2.1",

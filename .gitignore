@@ -1,1 +1,11 @@
 node_modules
+.env
+
+# Vim swap files
+*.swp
+*.swo
+*.swm
+*.swl
+*.swk
+*.swn
+*~

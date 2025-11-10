@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import booksRoute from "./routes/booksRoute.js";
 import ebooksRoute from "./routes/ebooksRoute.js";
 import audioBooksRoute from "./routes/audioBooksRoute.js";
+import authRoute from "./routes/authRoute.js";
 import cors from "cors";
 
 import "./schedulers/schedular1.js";
@@ -33,6 +34,7 @@ app.get("/", (request, response) => {
 app.use("/books", booksRoute);
 app.use("/ebooks", ebooksRoute);
 app.use("/audio", audioBooksRoute);
+app.use("/auth", authRoute);
 mongoose
   .connect(mongoDBURL)
   .then(() => {

@@ -1,8 +1,9 @@
 import express, { request } from 'express';
 import { Ebook } from '../models/ebookModel.js';
+import { authenticateToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
-router.post('/', async (request, response) => {
+router.post('/', authenticateToken, async (request, response) => {
     try {
         const { title, author, publishYear, category, price } = request.body;
         if (!title || !author || !publishYear || !category || !price) {
@@ -19,7 +20,7 @@ router.post('/', async (request, response) => {
     }
 })
 
-router.get('/', async (request, response) => {
+router.get('/', authenticateToken, async (request, response) => {
     try {
         const eBooks = await Ebook.find({});
         response.status(200).json({
@@ -31,7 +32,7 @@ router.get('/', async (request, response) => {
         response.status(500).json({ message: error.message })
     }
 })
-router.get('/:id', async (request, response) => {
+router.get('/:id', authenticateToken, async (request, response) => {
     try {
         const { id } = request.params;
         console.log(id);

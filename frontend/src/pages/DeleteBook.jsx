@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
-import axios from 'axios';
+import api from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import ProtectedHeader from '../components/ProtectedHeader';
 
 const DeleteBook = () => {
   const [loading, setLoading] = useState(false);
@@ -13,8 +14,8 @@ const DeleteBook = () => {
 
   const handleDeleteBook = () => {
     setLoading(true);
-    axios
-      .delete(`http://localhost:5555/books/${id}`)
+    api
+      .delete(`/books/${id}`)
       .then(() => {
         setLoading(false);
         enqueueSnackbar('Book Deleted successfully', { variant: 'success' });
@@ -29,7 +30,9 @@ const DeleteBook = () => {
   };
   
   return (
-    <div className='p-4'>
+    <div>
+      <ProtectedHeader />
+      <div className='p-4'>
       <BackButton />
       <h1 className='text-3xl my-4'>Delete Book</h1>
       {loading ? <Spinner /> : ''}
@@ -43,8 +46,9 @@ const DeleteBook = () => {
           Yes, Delete it
         </button>
       </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default DeleteBook;

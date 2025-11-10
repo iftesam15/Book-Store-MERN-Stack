@@ -1,10 +1,11 @@
 import express from "express";
 import { Book } from "../models/bookModel.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // Route for Save a new Book
-router.post("/", async (request, response) => {
+router.post("/", authenticateToken, async (request, response) => {
   try {
     const { title, author, publishYear } = request.body;
 
@@ -29,7 +30,7 @@ router.post("/", async (request, response) => {
 });
 
 // Route for Get All Books from database
-router.get("/", async (request, response) => {
+router.get("/", authenticateToken, async (request, response) => {
   try {
     const books = await Book.find({});
 
@@ -44,7 +45,7 @@ router.get("/", async (request, response) => {
 });
 
 // Route for Get One Book from database by id
-router.get("/:id", async (request, response) => {
+router.get("/:id", authenticateToken, async (request, response) => {
   try {
     const { id } = request.params;
 
@@ -58,7 +59,7 @@ router.get("/:id", async (request, response) => {
 });
 
 // Route for Update a Book
-router.put("/:id", async (request, response) => {
+router.put("/:id", authenticateToken, async (request, response) => {
   try {
     if (
       !request.body.title ||
@@ -86,7 +87,7 @@ router.put("/:id", async (request, response) => {
 });
 
 // Route for Delete a book
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", authenticateToken, async (request, response) => {
   try {
     const { id } = request.params;
 

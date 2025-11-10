@@ -1,9 +1,11 @@
 import express from "express";
 import { AudioBook } from "../models/audioBookModel.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
 // POST route for creating a new audiobook
-router.post("/", async (request, response) => {
+router.post("/", authenticateToken, async (request, response) => {
   try {
     // Check if the required fields are present
     const { title, author, genre, publicationYear, duration, price } =
@@ -36,7 +38,7 @@ router.post("/", async (request, response) => {
 });
 
 // GET route for fetching all audiobooks
-router.get("/", async (request, response) => {
+router.get("/", authenticateToken, async (request, response) => {
   try {
     const audioBooks = await AudioBook.find({});
     response.status(200).json(audioBooks);
