@@ -20,6 +20,9 @@ import { Boss } from "../components/Callbackdemo";
 import CommentList from "../components/Comments";
 import ProtectedHeader from "../components/ProtectedHeader";
 
+import InfiniteScrollList from "../components/InterSectionObserverDemo";
+import MultiObserverExample from "../components/IntercetionBoxExample";
+
 const Home = () => {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
@@ -84,23 +87,21 @@ const Home = () => {
             <MdOutlineAddBox className="text-sky-800 text-4xl" />
           </Link>
         </div>
-        {loading ? (
+        {/* {loading ? (
           <div className="flex justify-center items-center h-full">
-            {" "}
-            {/* Ensure spinner is vertically centered */}
             <Spinner />
           </div>
         ) : showType === "table" ? (
           <BooksTable books={books} />
         ) : (
           <BooksCard books={books} />
-        )}
+        )} */}
         {/* <Demo></Demo>
       <UseContext></UseContext>
       <UseMyContext></UseMyContext> */}
         {/* <UseRef></UseRef> */}
 
-        <TagManager></TagManager>
+        {/* <TagManager></TagManager> */}
         {/* <CounterProvider>
         <UseCountContext></UseCountContext>
       </CounterProvider> */}
@@ -123,7 +124,10 @@ const Home = () => {
       </div> */}
         {/* <Boss></Boss> */}
 
-        <CommentList />
+        {/* <CommentList /> */}
+
+        <InfiniteScrollList></InfiniteScrollList>
+        <MultiObserverExample></MultiObserverExample>
       </div>
     </div>
   );
