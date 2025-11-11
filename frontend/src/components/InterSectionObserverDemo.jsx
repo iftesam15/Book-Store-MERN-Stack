@@ -5,13 +5,20 @@ export default function InfiniteScrollList() {
     Array.from({ length: 10 }, (_, i) => i + 1)
   );
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const loaderRef = useRef(null);
+  const isLoadingRef = useRef(false);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    isLoadingRef.current = isLoading;
+  }, [isLoading]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        if (first.isIntersecting) {
+        if (first.isIntersecting && !isLoadingRef.current) {
           setPage((prev) => prev + 1);
         }
       },
@@ -19,17 +26,25 @@ export default function InfiniteScrollList() {
     );
 
     if (loaderRef.current) observer.observe(loaderRef.current);
-    return () => observer.disconnect();
-  }, []);
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, []); // Observer created once and never recreated
 
   useEffect(() => {
     if (page === 1) return;
+    
+    setIsLoading(true);
     // Simulate API call
-    const newItems = Array.from({ length: 10 }, (_, i) => items.length + i + 1);
     setTimeout(() => {
-      setItems((prev) => [...prev, ...newItems]);
+      setItems((prev) => {
+        const newItems = Array.from({ length: 10 }, (_, i) => prev.length + i + 1);
+        return [...prev, ...newItems];
+      });
+      setIsLoading(false);
     }, 1000);
-  }, [items.length, page]);
+  }, [page]); // Only depend on page, use functional update to access previous items
 
   return (
     <div style={{ maxHeight: "50vh", overflowY: "auto", padding: 20 }}>
@@ -47,7 +62,7 @@ export default function InfiniteScrollList() {
         </div>
       ))}
       <div ref={loaderRef} style={{ height: 40, textAlign: "center" }}>
-        Loading...
+        {isLoading ? "Loading..." : "Scroll for more"}
       </div>
     </div>
   );
