@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from "react";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
-import api from "../services/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import ProtectedHeader from "../components/ProtectedHeader";
+import { useBook, useUpdateBook } from "../hooks/useBooks";
 
 const EditBook = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
+  const { data: book, isLoading: isLoadingBook } = useBook(id);
+  const updateBookMutation = useUpdateBook();
 
   useEffect(() => {
-    setLoading(true);
-    api
-      .get(`/books/${id}`)
-      .then((response) => {
-        setAuthor(response.data.author);
-        setPublishYear(response.data.publishYear);
-        setTitle(response.data.title);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        alert("An error happened. Please Chack console");
-        console.log(error);
-      });
-  }, [id]);
+    if (book) {
+      setTitle(book.title || "");
+      setAuthor(book.author || "");
+      setPublishYear(book.publishYear || "");
+    }
+  }, [book]);
 
   const handleEditBook = () => {
     const data = {
@@ -38,29 +30,30 @@ const EditBook = () => {
       author,
       publishYear,
     };
-    setLoading(true);
-    api
-      .put(`/books/${id}`, data)
-      .then(() => {
-        setLoading(false);
-        enqueueSnackbar("Book Edited successfully", { variant: "success" });
-        navigate("/");
-      })
-      .catch((error) => {
-        setLoading(false);
-        // alert('An error happened. Please Chack console');
-        enqueueSnackbar("Error", { variant: "error" });
-        console.log(error);
-      });
+    
+    updateBookMutation.mutate(
+      { id, data },
+      {
+        onSuccess: () => {
+          enqueueSnackbar("Book Edited successfully", { variant: "success" });
+          navigate("/");
+        },
+        onError: (error) => {
+          const errorMessage = error.response?.data?.message || "Error updating book";
+          enqueueSnackbar(errorMessage, { variant: "error" });
+          console.log(error);
+        },
+      }
+    );
   };
 
   return (
     <div>
       <ProtectedHeader />
       <div className="p-4">
-        <BackButton />
-        <h1 className="text-3xl my-4">Edit Book</h1>
-        {loading ? <Spinner /> : ""}
+      <BackButton />
+      <h1 className="text-3xl my-4">Edit Book</h1>
+      {isLoadingBook || updateBookMutation.isPending ? <Spinner /> : ""}
         <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
           <div className="my-4">
             <label className="text-xl mr-4 text-gray-500">Title</label>

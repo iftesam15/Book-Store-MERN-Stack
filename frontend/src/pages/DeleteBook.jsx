@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
-import api from '../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import ProtectedHeader from '../components/ProtectedHeader';
+import { useDeleteBook } from '../hooks/useBooks';
 
 const DeleteBook = () => {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
+  const deleteBookMutation = useDeleteBook();
 
   const handleDeleteBook = () => {
-    setLoading(true);
-    api
-      .delete(`/books/${id}`)
-      .then(() => {
-        setLoading(false);
+    deleteBookMutation.mutate(id, {
+      onSuccess: () => {
         enqueueSnackbar('Book Deleted successfully', { variant: 'success' });
         navigate('/');
-      })
-      .catch((error) => {
-        setLoading(false);
-        // alert('An error happened. Please Chack console');
-        enqueueSnackbar('Error', { variant: 'error' });
+      },
+      onError: (error) => {
+        const errorMessage = error.response?.data?.message || 'Error deleting book';
+        enqueueSnackbar(errorMessage, { variant: 'error' });
         console.log(error);
-      });
+      },
+    });
   };
   
   return (
@@ -35,7 +32,7 @@ const DeleteBook = () => {
       <div className='p-4'>
       <BackButton />
       <h1 className='text-3xl my-4'>Delete Book</h1>
-      {loading ? <Spinner /> : ''}
+      {deleteBookMutation.isPending ? <Spinner /> : ''}
       <div className='flex flex-col items-center border-2 border-sky-400 rounded-xl w-[600px] p-8 mx-auto'>
         <h3 className='text-2xl'>Are You Sure You want to delete this book?</h3>
 

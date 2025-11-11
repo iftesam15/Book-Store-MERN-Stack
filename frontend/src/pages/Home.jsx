@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import api from "../services/api";
+import { useState } from "react";
 import Spinner from "../components/Spinner";
 import { Link, useNavigate } from "react-router-dom";
 import UseMyContext from "../components/ChainPropsContext/UseChainContext";
@@ -19,31 +18,18 @@ import Parent from "../components/Parent-child/parent";
 import { Boss } from "../components/Callbackdemo";
 import CommentList from "../components/Comments";
 import ProtectedHeader from "../components/ProtectedHeader";
-
 import InfiniteScrollList from "../components/InterSectionObserverDemo";
 import MultiObserverExample from "../components/IntercetionBoxExample";
+import { useBooks } from "../hooks/useBooks";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [showType, setShowType] = useState("table");
+  const { data: books = [], isLoading: loading, error } = useBooks();
+  
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-  useEffect(() => {
-    setLoading(true);
-    api
-      .get("/books")
-      .then((response) => {
-        setBooks(response.data.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <div>
@@ -87,7 +73,7 @@ const Home = () => {
             <MdOutlineAddBox className="text-sky-800 text-4xl" />
           </Link>
         </div>
-        {/* {loading ? (
+        {loading ? (
           <div className="flex justify-center items-center h-full">
             <Spinner />
           </div>
@@ -95,7 +81,7 @@ const Home = () => {
           <BooksTable books={books} />
         ) : (
           <BooksCard books={books} />
-        )} */}
+        )}
         {/* <Demo></Demo>
       <UseContext></UseContext>
       <UseMyContext></UseMyContext> */}

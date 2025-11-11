@@ -7,7 +7,7 @@ import audioBooksRoute from "./routes/audioBooksRoute.js";
 import authRoute from "./routes/authRoute.js";
 import cors from "cors";
 
-import "./schedulers/schedular1.js";
+// import "./schedulers/schedular1.js";
 
 const app = express();
 

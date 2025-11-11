@@ -3,16 +3,16 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { useContext } from "react";
 import UserContext from "../components/context/UserContext";
-import { authAPI } from "../services/api";
+import { useLogin } from "../hooks/useAuth";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
   const { login } = useContext(UserContext);
+  const loginMutation = useLogin();
 
   // Get the location the user was trying to access before being redirected to login
   const from = location.state?.from?.pathname || "/";
@@ -25,21 +25,23 @@ function Login() {
       return;
     }
 
-    setLoading(true);
-    try {
-      const response = await authAPI.login(email, password);
-      login(response.user, response.accessToken, response.refreshToken);
-      enqueueSnackbar("Login successful!", { variant: "success" });
-      // Redirect to the original location or home
-      navigate(from, { replace: true });
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Login failed. Please try again.";
-      enqueueSnackbar(errorMessage, { variant: "error" });
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
-    }
+    loginMutation.mutate(
+      { email, password },
+      {
+        onSuccess: (response) => {
+          login(response.user, response.accessToken, response.refreshToken);
+          enqueueSnackbar("Login successful!", { variant: "success" });
+          // Redirect to the original location or home
+          navigate(from, { replace: true });
+        },
+        onError: (error) => {
+          const errorMessage =
+            error.response?.data?.message || "Login failed. Please try again.";
+          enqueueSnackbar(errorMessage, { variant: "error" });
+          console.error("Login error:", error);
+        },
+      }
+    );
   };
 
   return (
@@ -75,7 +77,7 @@ function Login() {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={loading}
+                disabled={loginMutation.isPending}
               />
             </div>
             <div>
@@ -92,7 +94,7 @@ function Login() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                disabled={loading}
+                disabled={loginMutation.isPending}
               />
             </div>
           </div>
@@ -100,10 +102,10 @@ function Login() {
           <div>
             <button
               type="submit"
-              disabled={loading}
+              disabled={loginMutation.isPending}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loginMutation.isPending ? "Signing in..." : "Sign in"}
             </button>
           </div>
         </form>

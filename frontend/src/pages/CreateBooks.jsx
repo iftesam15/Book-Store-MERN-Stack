@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
-import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import ProtectedHeader from "../components/ProtectedHeader";
+import { useCreateBook } from "../hooks/useBooks";
 
 const CreateBooks = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [publishYear, setPublishYear] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const createBookMutation = useCreateBook();
 
   const handleSaveBook = () => {
     const data = {
@@ -20,21 +20,18 @@ const CreateBooks = () => {
       author,
       publishYear,
     };
-    setLoading(true);
-    api
-      .post("/books", data)
-      .then(() => {
-        setLoading(false);
+    
+    createBookMutation.mutate(data, {
+      onSuccess: () => {
         enqueueSnackbar("Book Created successfully", { variant: "success" });
-        console.log(data);
         navigate("/");
-      })
-      .catch((error) => {
-        setLoading(false);
-        // alert('An error happened. Please Chack console');
-        enqueueSnackbar("Error", { variant: "error" });
+      },
+      onError: (error) => {
+        const errorMessage = error.response?.data?.message || "Error creating book";
+        enqueueSnackbar(errorMessage, { variant: "error" });
         console.log(error);
-      });
+      },
+    });
   };
 
   return (
@@ -43,7 +40,7 @@ const CreateBooks = () => {
       <div className="p-4">
       <BackButton />
       <h1 className="text-3xl my-4">Create Book</h1>
-      {loading ? <Spinner /> : ""}
+      {createBookMutation.isPending ? <Spinner /> : ""}
       <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
         <div className="my-4">
           <label className="text-xl mr-4 text-gray-500">Title</label>

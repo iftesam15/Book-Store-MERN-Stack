@@ -32,6 +32,7 @@ router.post("/", authenticateToken, async (request, response) => {
 // Route for Get All Books from database
 router.get("/", authenticateToken, async (request, response) => {
   try {
+    response.set("Cache-Control", "no-store"); // always fetch fresh data
     const books = await Book.find({});
 
     return response.status(200).json({

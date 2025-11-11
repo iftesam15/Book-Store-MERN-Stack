@@ -3,17 +3,17 @@ import { useNavigate, Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { useContext } from "react";
 import UserContext from "../components/context/UserContext";
-import { authAPI } from "../services/api";
+import { useRegister } from "../hooks/useAuth";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { login } = useContext(UserContext);
+  const registerMutation = useRegister();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,24 +35,22 @@ function Register() {
       return;
     }
 
-    setLoading(true);
-    try {
-      const response = await authAPI.register({
-        username,
-        email,
-        password,
-      });
-      login(response.user, response.accessToken, response.refreshToken);
-      enqueueSnackbar("Registration successful!", { variant: "success" });
-      navigate("/");
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Registration failed. Please try again.";
-      enqueueSnackbar(errorMessage, { variant: "error" });
-      console.error("Registration error:", error);
-    } finally {
-      setLoading(false);
-    }
+    registerMutation.mutate(
+      { username, email, password },
+      {
+        onSuccess: (response) => {
+          login(response.user, response.accessToken, response.refreshToken);
+          enqueueSnackbar("Registration successful!", { variant: "success" });
+          navigate("/");
+        },
+        onError: (error) => {
+          const errorMessage =
+            error.response?.data?.message || "Registration failed. Please try again.";
+          enqueueSnackbar(errorMessage, { variant: "error" });
+          console.error("Registration error:", error);
+        },
+      }
+    );
   };
 
   return (
@@ -87,7 +85,7 @@ function Register() {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                disabled={loading}
+                disabled={registerMutation.isPending}
               />
             </div>
             <div>
@@ -104,7 +102,7 @@ function Register() {
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={loading}
+                disabled={registerMutation.isPending}
               />
             </div>
             <div>
@@ -121,7 +119,7 @@ function Register() {
                 placeholder="Password (min. 6 characters)"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                disabled={loading}
+                disabled={registerMutation.isPending}
               />
             </div>
             <div>
@@ -138,7 +136,7 @@ function Register() {
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                disabled={loading}
+                disabled={registerMutation.isPending}
               />
             </div>
           </div>
@@ -149,7 +147,7 @@ function Register() {
               disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Creating account..." : "Create account"}
+              {registerMutation.isPending ? "Creating account..." : "Create account"}
             </button>
           </div>
         </form>

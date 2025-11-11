@@ -114,6 +114,7 @@ router.post("/login", async (req, res) => {
     await user.save();
 
     return res.status(200).json({
+      statusCode: 200,
       message: "Login successful",
       accessToken,
       refreshToken,
