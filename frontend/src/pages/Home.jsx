@@ -21,12 +21,13 @@ import ProtectedHeader from "../components/ProtectedHeader";
 import InfiniteScrollList from "../components/InterSectionObserverDemo";
 import MultiObserverExample from "../components/IntercetionBoxExample";
 import { useBooks } from "../hooks/useBooks";
+import DemoMutation from "../components/home/DemoMutation";
 
 const Home = () => {
   const navigate = useNavigate();
   const [showType, setShowType] = useState("table");
   const { data: books = [], isLoading: loading, error } = useBooks();
-  
+
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };

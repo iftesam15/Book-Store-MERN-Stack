@@ -42,7 +42,8 @@ export const useCreateBook = () => {
       const response = await api.post("/books", bookData);
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log("datais", data);
       // Invalidate and refetch books list
       queryClient.invalidateQueries({ queryKey: bookKeys.lists() });
     },
@@ -61,7 +62,9 @@ export const useUpdateBook = () => {
     onSuccess: (data, variables) => {
       // Invalidate and refetch books list and specific book
       queryClient.invalidateQueries({ queryKey: bookKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: bookKeys.detail(variables.id) });
+      queryClient.invalidateQueries({
+        queryKey: bookKeys.detail(variables.id),
+      });
     },
   });
 };
@@ -81,4 +84,3 @@ export const useDeleteBook = () => {
     },
   });
 };
-
