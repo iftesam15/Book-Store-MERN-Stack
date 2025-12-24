@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FormComponent from "./FormComponent";
 import FilterComponent from "./FilterComponent";
+import Child from "./Child";
 
 const Parent = () => {
   const [filterData, setFilterData] = useState(null);
@@ -11,11 +12,16 @@ const Parent = () => {
     setFilterData(data);
   };
 
+  const handleDataReceived = (data) => {
+    console.log("Received data from Child:", data);
+  };
+
   return (
     <div>
-      <h1>React Hook Form with Filtering</h1>
+      <Child sendDataToParent={handleDataReceived}></Child>
+      {/* <h1>React Hook Form with Filtering</h1>
       <FormComponent onSubmitForm={handleFormSubmit} />
-      <FilterComponent filterCriteria={filterData} />
+      <FilterComponent filterCriteria={filterData} /> */}
     </div>
   );
 };

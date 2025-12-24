@@ -14,7 +14,7 @@ import Cart from "../components/Cart";
 import i18n from "../i18n";
 import UserContextProvider from "../components/context/UserContextProvider";
 import Profile from "../components/Profile";
-import Parent from "../components/Parent-child/parent";
+import Parent from "../components/Parent-child/Parent";
 import { Boss } from "../components/Callbackdemo";
 import CommentList from "../components/Comments";
 import ProtectedHeader from "../components/ProtectedHeader";
@@ -113,8 +113,10 @@ const Home = () => {
 
         {/* <CommentList /> */}
 
-        <InfiniteScrollList></InfiniteScrollList>
-        <MultiObserverExample></MultiObserverExample>
+        {/* <InfiniteScrollList></InfiniteScrollList>
+        <MultiObserverExample></MultiObserverExample> */}
+
+        <Parent></Parent>
       </div>
     </div>
   );
